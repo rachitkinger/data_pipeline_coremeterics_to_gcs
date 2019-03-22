@@ -1,16 +1,14 @@
-get_report_details <- function(report_name) {
-  # return start_period, end_period, frequency
-}
+
 get_period <- function(start_period, end_period, frequency) {
-  # return dataframe of all periods
+  # returns vector of all periods that can be inserted into api link
 }
 get_api <- function(period, report_name) {
   # return api valid for that period
 }
-get_report <- function(api_modified) {
+get_raw_report <- function(api_modified) {
   # return dataframe of raw downloaded report
 }
-get_clean_report <- fuction(report, frequency, unit_of_analysis) {
+get_clean_report <- fuction(raw_report, frequency, unit_of_analysis) {
   # returns clean report
   # remove totals
   # convert to date format
@@ -24,7 +22,23 @@ get_clean_report <- fuction(report, frequency, unit_of_analysis) {
     # report unit of analysis (pageviews, unique visitors, etc.)
     # report name as per google sheet
 }
-name_and_save_report <- function(clean_report, report_name, period) {
+save_report <- function(clean_report, report_name, period) {
   # saves report in csv format
 }
 
+for(i in 1:nrow(report_details)) {
+  report_name <- report_details$report_name[i]
+  frequency <- report_details$frequency[i]
+  unit_of_analysis <- report_details$unit_of_analysis[i]
+  start_period <- report_details$start_period[i]
+  end_period <- report_details$end_period[i]
+  
+  report_periods <- get_period(start_period, end_period, frequency)
+  
+  for(period in report_periods){
+    clean_api <- get_api(period, report_name)
+    raw_report <- get_raw_report(clean_api)
+    clean_report <- get_clean_report(raw_report, frequency, unit_of_analysis)
+    save_report(clean_report, report_name, period)
+  }
+}
