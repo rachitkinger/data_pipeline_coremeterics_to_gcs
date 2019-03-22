@@ -1,8 +1,16 @@
 
+# build the inital google sheets doc which has the following details:  
+  # report_name
+  # frequency
+  # unit_of_analysis
+  # start_period
+  # end_period
+  # original_api
+  
 get_period <- function(start_period, end_period, frequency) {
   # returns vector of all periods that can be inserted into api link
 }
-get_api <- function(period, report_name) {
+get_modified_api <- function(period, original_api) {
   # return api valid for that period
 }
 get_raw_report <- function(api_modified) {
@@ -32,12 +40,13 @@ for(i in 1:nrow(report_details)) {
   unit_of_analysis <- report_details$unit_of_analysis[i]
   start_period <- report_details$start_period[i]
   end_period <- report_details$end_period[i]
+  original_api <- report_details$original_api[i]
   
   report_periods <- get_period(start_period, end_period, frequency)
   
   for(period in report_periods){
-    clean_api <- get_api(period, report_name)
-    raw_report <- get_raw_report(clean_api)
+    modified_api <- get_modified_api(period, original_api)
+    raw_report <- get_raw_report(modified_api)
     clean_report <- get_clean_report(raw_report, frequency, unit_of_analysis)
     save_report(clean_report, report_name, period)
   }
