@@ -1,3 +1,5 @@
+#NOTE GET PERIOD FUNCTION IS NOT WORKING BECAUSE OF SOMETHING TO DO WITH GET_MONTHLY_DATES
+
 # refer to scripts in folder 'api_based_scripts...' to
 # build each of the below functions based on frequency of report
 
