@@ -35,6 +35,19 @@ Report number 3 and 10 had a column called `Page Attribute: URL Top  Second Cate
 ### "Average Time On Page"  
 For the sake of analysis this has been converted in seconds.  
 
+### Logs  
+The script generates two logs.  
+
+1. Download log - a log of all reports downloaded. It contains the following information:  
+  - Number of rows per downloaded report  
+  - Report name  
+  - Report period  
+2. Warning log - a log of all instances when a report hit its size limit, i.e., reached 50k rows. This means that the data returned by that report is no longer accurate and hence cannot be used for complete analysis.  
+
+## What data not to use  
+
+This section will be populated once we know which reports hit their size limit.  
+
 
 
 
