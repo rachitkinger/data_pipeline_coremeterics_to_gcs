@@ -14,3 +14,22 @@ f3 <- report_details$frequency[7]
 
 d <- get_period(x1, y1, f1)
 
+get_period_2 <- function(start_period, end_period, frequency) {
+
+dates <- if_else(frequency == "daily", get_daily_dates(start_period, end_period),
+        if_else(frequency == "weekly", get_weekly_dates(start_period, end_period),
+                get_monthly_dates(start_period)))
+
+return(dates)
+}
+
+
+
+x <- 1:50
+case_when(
+  x %% 35 == 0 ~ "fizz buzz",
+  x %% 5 == 0 ~ "fizz",
+  x %% 7 == 0 ~ "buzz"
+)
+
+
