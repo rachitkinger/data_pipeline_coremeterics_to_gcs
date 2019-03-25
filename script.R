@@ -69,7 +69,7 @@ get_raw_report <- function(api_modified, report_name, period) {
   download_log <- paste0("|Report size: ",nrow(raw_report), "rows|Report name: ",report_name,"|Report period: ",period)
   write_lines(download_log,"download_log", append = TRUE )
   if(nrow(raw_report) > 49999) {warning <- paste0("|Report size 50k!|Report name: ",report_name,"|Report period: ",period)
-    write_lines(warning, "log_warning", append = TRUE)}
+    write_lines(warning, "warning_log", append = TRUE)}
    
   return(raw_report)
   
@@ -127,7 +127,7 @@ save_clean_report <- function(clean_report, report_name, unit_of_analysis, frequ
 
 
 
-log_warning <- NULL
+
 for(i in 1:nrow(report_details)) {
   report_name <- report_details$report_name[i]
   frequency <- report_details$frequency[i]
