@@ -111,6 +111,11 @@ save_raw_report <- function(raw_report, report_name, unit_of_analysis, frequency
 
 save_clean_report <- function(clean_report, report_name, unit_of_analysis, frequency, period) {
   # saves report in csv format
+  # saves report in csv format
+  file_name <- paste(report_name, unit_of_analysis, frequency, period, sep = "_")
+  file_name <- paste0(file_name, ".csv")
+  path_name <- paste("clean_reports", file_name, sep = "/")
+  write_csv(clean_report, path = path_name)
 }
 
 for(i in 1:nrow(report_details)) {
