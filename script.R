@@ -79,6 +79,7 @@ get_clean_report <- function(raw_report, frequency, unit_of_analysis) {
   
   # convert average time on page to seconds
   if(str_detect(str_flatten(colnames(raw_report), collapse = ","), "Average Time On Page")) {raw_report$`Average Time On Page` <- as.numeric(raw_report$`Average Time On Page`)}
+  
   # break down top_second_category into two categories
   
   # add columns for
@@ -89,7 +90,11 @@ get_clean_report <- function(raw_report, frequency, unit_of_analysis) {
     # report name as per google sheet
   return(raw_report)
 }
-save_report <- function(clean_report, report_name, unit_of_analysis, frequency, period) {
+save_raw_report <- function(raw_report, report_name, unit_of_analysis, frequency, period) {
+  # saves report in csv format
+}
+
+save_clean_report <- function(clean_report, report_name, unit_of_analysis, frequency, period) {
   # saves report in csv format
 }
 
@@ -106,7 +111,8 @@ for(i in 1:nrow(report_details)) {
   for(period in report_periods){
     modified_api <- get_modified_api(period, original_api)
     raw_report <- get_raw_report(modified_api)
+    save_raw_report(raw_report, report_name, unit_of_analysis, frequency, period)
     clean_report <- get_clean_report(raw_report, frequency, unit_of_analysis)
-    save_report(clean_report, report_name, unit_of_analysis, frequency, period)
+    save_clean_report(clean_report, report_name, unit_of_analysis, frequency, period)
   }
 }
