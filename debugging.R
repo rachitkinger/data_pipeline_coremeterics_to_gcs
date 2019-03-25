@@ -24,12 +24,7 @@ return(dates)
 }
 
 
+# deleted some lines below
 
-x <- 1:50
-case_when(
-  x %% 35 == 0 ~ "fizz buzz",
-  x %% 5 == 0 ~ "fizz",
-  x %% 7 == 0 ~ "buzz"
-)
-
+# then added this comment 
 
