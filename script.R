@@ -66,7 +66,11 @@ get_modified_api <- function(period, original_api) {
 
 get_raw_report <- function(api_modified, report_name, period) {
   raw_report <- read_csv(api_modified)
-  if(nrow(raw_report > 49999)) {print(paste0("Report size 50k! Report name: ",report_name,"Report period: ",period))}
+  download_log <- paste0("|Report size: ",nrow(raw_report), "rows|Report name: ",report_name,"|Report period: ",period)
+  write_lines(download_log,"download_log", append = TRUE )
+  if(nrow(raw_report) > 49999) {warning <- paste0("|Report size 50k!|Report name: ",report_name,"|Report period: ",period)
+    write_lines(warning, "log_warning", append = TRUE)}
+   
   return(raw_report)
   
 }
@@ -121,6 +125,9 @@ save_clean_report <- function(clean_report, report_name, unit_of_analysis, frequ
   write_csv(clean_report, path = path_name)
 }
 
+
+
+log_warning <- NULL
 for(i in 1:nrow(report_details)) {
   report_name <- report_details$report_name[i]
   frequency <- report_details$frequency[i]
@@ -132,10 +139,10 @@ for(i in 1:nrow(report_details)) {
   report_periods <- get_period(start_period, end_period, frequency)
   
   for(period in report_periods){
-    modified_api <- get_modified_api(period, original_api)
-    raw_report <- get_raw_report(modified_api, report_name, period)
+    api_modified <- get_modified_api(period, original_api)
+    raw_report <- get_raw_report(api_modified, report_name, period)
     save_raw_report(raw_report, report_name, unit_of_analysis, frequency, period)
-    clean_report <- get_clean_report(raw_report, frequency, unit_of_analysis)
+    clean_report <- get_clean_report(raw_report, report_name, frequency, unit_of_analysis)
     save_clean_report(clean_report, report_name, unit_of_analysis, frequency, period)
   }
 }
