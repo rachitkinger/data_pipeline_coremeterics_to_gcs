@@ -67,7 +67,7 @@ get_modified_api <- function(period, original_api) {
 get_raw_report <- function(api_modified) {
   read_csv(api_modified)
 }
-get_clean_report <- function(raw_report, frequency, unit_of_analysis) {
+get_clean_report <- function(raw_report, report_name, frequency, unit_of_analysis) {
   # returns clean report
   # remove totals
   raw_report <- raw_report %>% 
@@ -91,11 +91,14 @@ get_clean_report <- function(raw_report, frequency, unit_of_analysis) {
       select(`Site ID`,`Mobile Device Type`,`Marketing Channel`,`Page Attribute: URL Top  Second Category`, `Top Level Category`, `Top Second Level Category`,`Page Attribute: Page Type`,`Page Views`,`Entry Page Views`,`Average Time On Page`,`Bounce Rate`,`Unique Visitors`)
     }
   # add columns for
-    # site url
-    # site group/segment
+    # site url <not doing>
+    # site group/segment <not doing>
     # report frequency (daily, weekly, monthly)
+  raw_report$report_name <- report_name
     # report unit of analysis (pageviews, unique visitors, etc.)
+  raw_report$unit_of_analysis <- unit_of_analysis
     # report name as per google sheet
+  raw_report$frequency <- frequency
   return(raw_report)
 }
 save_raw_report <- function(raw_report, report_name, unit_of_analysis, frequency, period) {
