@@ -14,9 +14,27 @@ The script was run on a Google VM instance using the R version 3.5.3. with the f
 4. stringr  
 5. googlesheets
 
-The data was downloaded onto a Google Cloud Storage bucket gs://ibm_da_backup  
-
 Each report was downloaded as a csv file.  
+
+The data was downloaded onto a Google Cloud Storage bucket gs://ibm_da_backup  ]
+
+## Additional usage notes  
+Two types of reports were saved:  
+
+1. Raw reports (as is reports from IBM)  
+2. Clean reports (cleaned up reports which are more user friendly and ready for analysis)  
+
+The naming convention is `"report_name"_"unit_of_analysis"_"frequency"_"period".csv`  
+The raw reports are stored in a folder called `raw_reports` and clean reports in `clean_reports`.  
+
+## Notes on column names  
+### "Page Attribute: URL Top  Second Category", "Top Level Category", "Top Second Level Category"  
+
+Report number 3 and 10 had a column called `Page Attribute: URL Top  Second Category`. For an article that is published under `/sport/football` the value for this column would be `"Sport | Football"`. For the sake of analysis this has been split into two columns called "Top Level Category" and "Top Second Level Category"  
+
+### "Average Time On Page"  
+For the sake of analysis this has been converted in seconds.  
+
 
 
 
