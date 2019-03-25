@@ -63,8 +63,9 @@ get_modified_api <- function(period, original_api) {
   # return api valid for that period
   gsub(pattern = "period_a=.\\d{8}", replacement = paste0("period_a=",period), original_api)
 }
+
 get_raw_report <- function(api_modified) {
-  # return dataframe of raw downloaded report
+  read_csv(api_modified)
 }
 get_clean_report <- fuction(raw_report, frequency, unit_of_analysis) {
   # returns clean report
