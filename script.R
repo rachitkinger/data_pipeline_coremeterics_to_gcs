@@ -67,19 +67,27 @@ get_modified_api <- function(period, original_api) {
 get_raw_report <- function(api_modified) {
   read_csv(api_modified)
 }
-get_clean_report <- fuction(raw_report, frequency, unit_of_analysis) {
+get_clean_report <- function(raw_report, frequency, unit_of_analysis) {
   # returns clean report
   # remove totals
-  # convert to date format
-  # remove bounce rate integer
+  raw_report <- raw_report %>% 
+    filter(`Site ID` != "Total")
+  
+  # remove 'Bounce Rate Integer' if it exists as one of the columns
+  if(str_detect(str_flatten(colnames(raw_report), collapse = ","), "Bounce Rate Integer")) {loc_bounce_rate_integer <- grep("Bounce Rate Integer", colnames(raw_report))
+  raw_report <- raw_report[,-loc_bounce_rate_integer]}
+  
   # convert average time on page to seconds
+  if(str_detect(str_flatten(colnames(raw_report), collapse = ","), "Average Time On Page")) {raw_report$`Average Time On Page` <- as.numeric(raw_report$`Average Time On Page`)}
   # break down top_second_category into two categories
+  
   # add columns for
     # site url
     # site group/segment
     # report frequency (daily, weekly, monthly)
     # report unit of analysis (pageviews, unique visitors, etc.)
     # report name as per google sheet
+  return(raw_report)
 }
 save_report <- function(clean_report, report_name, unit_of_analysis, frequency, period) {
   # saves report in csv format
