@@ -81,7 +81,15 @@ get_clean_report <- function(raw_report, frequency, unit_of_analysis) {
   if(str_detect(str_flatten(colnames(raw_report), collapse = ","), "Average Time On Page")) {raw_report$`Average Time On Page` <- as.numeric(raw_report$`Average Time On Page`)}
   
   # break down top_second_category into two categories
-  
+  if(str_detect(str_flatten(colnames(raw_report), collapse = ","), "Page Attribute: URL Top  Second Category")) {
+    cats <- str_split_fixed(raw_report$`Page Attribute: URL Top  Second Category`,fixed("|"), 2)
+    cats <- as.data.frame(cats, stringsAsFactors = FALSE)
+    cats <- apply(cats, 2, function(col) ifelse(col ==  "", NA, as.character(col)))
+    colnames(cats) <- c("Top Level Category", "Top Second Level Category")
+    raw_report <- cbind(raw_report, cats)
+    raw_report <- raw_report %>% 
+      select(`Site ID`,`Mobile Device Type`,`Marketing Channel`,`Page Attribute: URL Top  Second Category`, `Top Level Category`, `Top Second Level Category`,`Page Attribute: Page Type`,`Page Views`,`Entry Page Views`,`Average Time On Page`,`Bounce Rate`,`Unique Visitors`)
+    }
   # add columns for
     # site url
     # site group/segment
