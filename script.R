@@ -44,23 +44,19 @@ get_weekly_dates <- function(start_period, end_period) {
   return(dates)
 }
 
-get_monthly_dates <- function(start_period, end_period) {
+get_monthly_dates <- function(start_period) {
   dates <- start_period %m+% months(0:24)
-  dates <- gsub("-", "", dates)
-  dates <- paste0("M", dates)
+  dates = gsub("-", "", dates)
+  dates = paste0("M", dates)
   return(dates)
 }
 
 get_period <- function(start_period, end_period, frequency) {
   # returns vector of all periods that can be inserted into api link
   
-  dates <- case_when(
-    frequency == "daily" ~ get_daily_dates(start_period, end_period),
-    frequency == "weekly" ~ get_weekly_dates(start_period, end_period),
-    frequency == "monthly" ~ get_monthly_dates(start_period, end_period)
-  )
-  
-  return(dates)
+  if(frequency == "daily") {return(get_daily_dates(start_period, end_period))}
+  if(frequency == "weekly") {return(get_weekly_dates(start_period, end_period))}
+  if(frequency == "monthly") {return(get_monthly_dates(start_period))}
 }
 
 get_modified_api <- function(period, original_api) {
