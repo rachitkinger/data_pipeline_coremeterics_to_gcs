@@ -64,8 +64,14 @@ get_modified_api <- function(period, original_api) {
   gsub(pattern = "period_a=.\\d{8}", replacement = paste0("period_a=",period), original_api)
 }
 
-get_raw_report <- function(api_modified) {
-  read_csv(api_modified)
+get_raw_report <- function(api_modified, report_name, period) {
+  raw_report <- read_csv(api_modified)
+  if(nrow(raw_report > 49999)) {print(paste0("Report size 50k! Report name: ",
+                                             report_name,
+                                            "Report period: ",
+                                            period))}
+  return(raw_report)
+  
 }
 get_clean_report <- function(raw_report, report_name, frequency, unit_of_analysis) {
   # returns clean report
