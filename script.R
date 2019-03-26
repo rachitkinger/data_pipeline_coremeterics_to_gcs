@@ -66,10 +66,10 @@ get_modified_api <- function(period, original_api) {
 
 get_raw_report <- function(api_modified, report_name, period) {
   raw_report <- read_csv(api_modified)
-  download_log <- paste0("|Report size: ",nrow(raw_report), "rows|Report name: ",report_name,"|Report period: ",period)
-  write_lines(download_log,"download_log", append = TRUE )
-  if(nrow(raw_report) > 49999) {warning <- paste0("|Report size 50k!|Report name: ",report_name,"|Report period: ",period)
-    write_lines(warning, "warning_log", append = TRUE)}
+  download_entry <- paste(report_name,nrow(raw_report), period, sep =",")
+  write_lines(download_entry,"download_log.csv", append = TRUE )
+  if(nrow(raw_report) > 49999) {warning_entry <- paste(report_name,nrow(raw_report),period, sep = ",")
+    write_lines(warning_entry, "warning_log.csv", append = TRUE)}
    
   return(raw_report)
   
