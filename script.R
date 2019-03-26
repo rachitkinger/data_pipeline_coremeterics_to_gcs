@@ -74,7 +74,7 @@ get_raw_report <- function(api_modified, report_name, period) {
   return(raw_report)
   
 }
-get_clean_report <- function(raw_report, report_name, frequency, unit_of_analysis) {
+get_clean_report <- function(raw_report, report_name, frequency, unit_of_analysis, period) {
   # returns clean report
   # remove totals
   raw_report <- raw_report %>% 
@@ -100,12 +100,16 @@ get_clean_report <- function(raw_report, report_name, frequency, unit_of_analysi
   # add columns for
     # site url <not doing>
     # site group/segment <not doing>
+    # add date column to match period
+    period <- gsub("\\D+", "", period)
+    raw_report$date <- period
     # report frequency (daily, weekly, monthly)
-  raw_report$report_name <- report_name
+    raw_report$frequency <- frequency
     # report unit of analysis (pageviews, unique visitors, etc.)
-  raw_report$unit_of_analysis <- unit_of_analysis
+    raw_report$unit_of_analysis <- unit_of_analysis
     # report name as per google sheet
-  raw_report$frequency <- frequency
+    raw_report$report_name <- report_name
+    
   return(raw_report)
 }
 save_raw_report <- function(raw_report, report_name, unit_of_analysis, frequency, period) {
@@ -142,7 +146,7 @@ for(i in 1:nrow(report_details)) {
     api_modified <- get_modified_api(period, original_api)
     raw_report <- get_raw_report(api_modified, report_name, period)
     save_raw_report(raw_report, report_name, unit_of_analysis, frequency, period)
-    clean_report <- get_clean_report(raw_report, report_name, frequency, unit_of_analysis)
+    clean_report <- get_clean_report(raw_report, report_name, frequency, unit_of_analysis, period)
     save_clean_report(clean_report, report_name, unit_of_analysis, frequency, period)
   }
 }
